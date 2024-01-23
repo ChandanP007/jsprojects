@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #222;
+      }
+      p {
+        font-weight: 500;
+        font-size: 1.5rem;
+      }
+      .container {
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: whitesmoke;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        gap: 1.4em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      #qrText {
+        padding: 10px;
+        width: 400px;
+        outline-color: #db4437;
+      }
+      #generateBtn {
+        margin: 10px 0px 5px 0px;
+        background: #db4437;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        color: white;
+        width: 100%;
+      }
+      #qrBox {
+        border-radius: 5px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s;
+      }
+      #qrBox.showImg {
+        max-height: 300px;
+      }
+      .shake{
+        border: 1px solid red;
+        animation: shakee 0.1s linear 10;
+      }
+      @keyframes shakee {
+        0%{
+            transform: translateX(0);
+        }
+        25%{
+            transform: translateX(-2px);
+        }
+        50%{
+            transform: translateX(0);
+        }
+        75%{
+            transform: translateX(2px);
+        }
+        100%{
+            transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>QR Code Generator</p>
+      <input type="text" placeholder="Enter the Text/ Link" id="qrText" />
+      <button id="generateBtn" onclick="generateQr()">Generate</button>
+
+      <div id="qrBox">
+        <img src="" alt="" id="qrImg" />
+      </div>
+    </div>
+
+    <script>
+      const qrText = document.getElementById("qrText");
+      const qrImg = document.getElementById("qrImg");
+      const qrBox = document.getElementById("qrBox");
+
+      function generateQr() {
+        if (qrText.value.length > 0) {
+          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrText.value}`;
+          qrBox.classList.add("showImg");
+          console.log(qrText.value);
+        }else{
+            qrText.classList.add("shake");
+            setTimeout(()=>{
+                qrText.classList.remove("shake");
+            },1000)
+        }
+      }
+    </script>
+  </body>
+</html>
